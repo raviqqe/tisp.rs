@@ -1,0 +1,6 @@
+[package]
+name = "tisp"
+version = "0.1.0"
+authors = ["Yota Toyama <raviqqe@gmail.com>"]
+
+[dependencies]
