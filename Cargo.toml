@@ -4,3 +4,5 @@ version = "0.1.0"
 authors = ["Yota Toyama <raviqqe@gmail.com>"]
 
 [dependencies]
+docopt = "0.8"
+hamt-rs = "0.2"
