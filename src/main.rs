@@ -1,8 +1,12 @@
 extern crate docopt;
 #[macro_use]
+extern crate nom;
+#[macro_use]
 extern crate serde_derive;
 
+
 mod thunk;
+mod parse;
 
 use thunk::Thunk;
 
