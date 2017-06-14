@@ -1,9 +1,12 @@
 extern crate docopt;
 #[macro_use]
+extern crate log;
+#[macro_use]
 extern crate nom;
 #[macro_use]
 extern crate serde_derive;
 
+mod logger;
 mod thunk;
 mod parse;
 
@@ -16,6 +19,7 @@ use parse::parse;
 #[derive(Debug, Deserialize)]
 struct Args {
     arg_filename: String,
+    flag_log_level: String,
 }
 
 fn get_args() -> Args {
@@ -23,10 +27,11 @@ fn get_args() -> Args {
 Tisp interpreter.
 
 Usage:
-    tisp [<filename>]
+    tisp [-l <log_level>] [<filename>]
     tisp (-h | --help)
 
 Options:
+    -l, --log-level <log_level>  Set log level [default: error].
     -h, --help  Show help.
 ";
 
@@ -44,17 +49,21 @@ fn read_file(f: String) -> String {
             assert_eq!(n, s.len());
             s
         }
-        Err(s) => exit(1),
+        Err(s) => {
+            error!("{}", s);
+            exit(1)
+        },
     }
-
 }
 
 fn main() {
     let args = get_args();
 
+    logger::init(&args.flag_log_level);
+
     parse(read_file(args.arg_filename));
 
-    let t = Thunk::app(Thunk::num(123.0), thunk::Args::new());
+    Thunk::app(Thunk::num(123.0), thunk::Args::new());
 
     println!("Hello, Tisp!");
 }
