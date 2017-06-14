@@ -1,1 +1,3 @@
-pub fn parse() {}
+pub fn parse(s: String) {
+    return;
+}
